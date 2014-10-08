@@ -1,0 +1,1 @@
+sh start.sh '3' '/data/local/tmp/reboot-time.txt'

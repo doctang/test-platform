@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<module>
+    <name>contacts-uiautomator</name>
+    <type>3</type>
+    <version>1.0</version>
+    <description>This is a contacts uiautomator test</description>
+</module>

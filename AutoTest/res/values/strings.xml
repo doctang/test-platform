@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Stress Test</string>
+    <string name="manual_finish">Manual finish</string>
+    <string name="manual_cancel">Manual cancel</string>
+    <string name="empty">No items</string>
+    <string name="test_summary">%1$d success %2$d failure</string>
+    <string name="test_times_label">Test times:</string>
+    <string name="test_times_default" translatable="false">1</string>
+    <string name="select_all">Select all</string>
+    <string name="deselect_all">Deselect all</string>
+    <string name="start_selected_test">Start selected test</string>
+    <string name="airplane_mode_test">AirplaneMode Test</string>
+    <string name="wireless_test">Wireless Test</string>
+    <string name="bluetooth_test">Bluetooth Test</string>
+    <string name="wifi_test">Wi-Fi Test</string>
+    <string name="nfc_test">NFC Test</string>
+    <string name="ringtone_test">Ringtone Test</string>
+    <string name="file_system_test">File system Test</string>
+    <string name="sdcard_test">SDCard Test</string>
+    <string name="charger_test">Charger Test</string>
+    <string name="sleep_wake_test">Sleep&amp;Wake Test</string>
+    <string name="breathinglight_test">Breathinglight Test</string>
+    <string name="apn_test">APN Test</string>
+    <string name="call_test">Call Test</string>
+    <string name="outgoing_number_label">Outgoing number:</string>
+    <string name="test_interval_label">Test interval(ms):</string>
+    <string name="sms_test">SMS Test</string>
+    <string name="vibrator_test">Vibrator Test</string>
+    <string name="camera_test">Camera Test</string>
+    <string name="compass_sensor_test">Magnetic Field Sensor Test</string>
+    <string name="accelerometer_sensor_test">Accelerometer Sensor Test</string>
+    <string name="proximity_sensor_test">Proximity Sensor Test</string>
+    <string name="light_sensor_test">Light Sensor Test</string>
+    <string name="gyroscope_sensor_test">Gyroscope Sensor Test</string>
+    <string name="pressure_sensor_test">Pressure Sensor Test</string>
+    <string name="humidity_sensor_test">Humidity Sensor Test</string>
+    <string name="temperature_sensor_test">Temperature Sensor Test</string>
+    <string name="reboot_test">Reboot Test</string>
+    <string name="recovery_test">Recovery Test</string>
+    <string name="network_test">Network Service Test</string>
+    <string name="network_test2">Network Search Test</string>
+    <string name="network_test3">Network Search Maximum Time Test</string>
+    <string name="data_test">Data Test</string>
+    <string name="baseband_version_test">Baseband Version Test</string>
+    <string name="report_titles">No.\tTotal Times\tTest Times\tSuccess Times\tFailure Times\tTest Item\n</string>
+
+</resources>

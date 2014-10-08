@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Test Platform</string>
+    <string name="ready">Ready</string>
+    <string name="registering">Registering</string>
+    <string name="connecting">Connecting</string>
+    <string name="disconnecting">Disconnecting</string>
+    <string name="connected">ON</string>
+    <string name="disconnected">OFF</string>
+    <string name="wifi_mac_invalid">Wi-Fi mac address is invalid</string>
+    <string name="user_name_invalid">User name is invalid</string>
+    <string name="user_name_inactivated">User name is inactivated</string>
+    <string name="device_related">Current device is related</string>
+    <string name="server_connected">Server is connected.</string>
+    <string name="server_disconnected">Server is disconnected.</string>
+    <string name="installing">Installing %1$s</string>
+    <string name="system_update">System update</string>
+    <string name="system_test">System test</string>
+    <string name="timeout_skip">You\'ve %1$d seconds to skip.</string>
+    <string name="version_download_title">Version Download</string>
+    <string name="version_download_text">Downloading version %1$s.</string>
+    <string name="module_update_title">Module Update</string>
+    <string name="module_update_text">Updating module %1$s.</string>
+    <string name="file_upload_title">File Upload</string>
+    <string name="file_upload_text">Uploading files.</string>
+    <string name="build_date">Build date</string>
+    <string name="build_url">Update URL</string>
+    <string name="test_name">Test name</string>
+    <string name="test_module">Test module</string>
+    <string name="test_extras">Test extras</string>
+    <string name="test_output">Test output</string>
+    <string name="task_status">Task status</string>
+    <string name="task_not_start">Unstart</string>
+    <string name="task_cancel">Cancel</string>
+    <string name="task_wait">Waiting</string>
+    <string name="task_going">Running</string>
+    <string name="task_fail">Fail</string>
+    <string name="task_ok">Done</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    <string-array name="drawer_titles">
+        <item>@string/connection</item>
+        <item>@string/settings</item>
+        <item>@string/manage_task</item>
+        <item>@string/manage_output</item>
+        <item>@string/about</item>
+    </string-array>
+
+    <!-- Connection -->
+    <string name="user_name">User name</string>
+    <string name="user_name_def" translatable="false">Guest</string>
+    <string name="connection">Connection</string>
+
+    <!-- Platform settings -->
+    <string name="settings">Settings</string>
+    <string name="never_update">Skip update</string>
+    <string name="never_update_s">Ignore system upgrade</string>
+    <string name="never_test">Skip test</string>
+    <string name="never_test_s">Ignore system test</string>
+
+    <!-- Manage task -->
+    <string name="manage_task">Manage task</string>
+    <plurals name="tasks">
+        <item quantity="zero">0 task</item>
+        <item quantity="one">1 task</item>
+        <item quantity="other">%d tasks</item>
+    </plurals>
+
+    <!-- Manage output -->
+    <string name="manage_output">Manage output</string>
+    <string name="upload">Upload</string>
+    <string name="share">Share</string>
+    <string name="delete">Delete</string>
+    <string name="uploading">Uploading</string>
+    <string name="upload_ok">Upload finish</string>
+    <string name="upload_fail">Upload fail</string>
+    <string name="empty">No data</string>
+    <string name="long_press_select">Long press to start selection</string>
+    <string name="select_items">Select Items</string>
+    <plurals name="selects">
+        <item quantity="one">One item selected</item>
+        <item quantity="other">%d items selected</item>
+    </plurals>
+
+    <!-- Admin -->
+    <string name="admin">Administration</string>
+
+    <!-- About -->
+    <string name="about">About</string>
+    <string name="device_info">Device</string>
+    <string name="address">Device address</string>
+    <string name="model">Device model</string>
+    <string name="display">Build display</string>
+    <string name="build">Build date</string>
+    <string name="version_info">Version</string>
+    <string name="version">Version</string>
+    <string name="version_update">Version update</string>
+    <string name="version_check">Click to check version</string>
+    <string name="version_new">New version：%1$s\n\n%2$s</string>
+    <string name="version_uptodate">Version is up to date</string>
+    <string name="update">Update</string>
+
+</resources>

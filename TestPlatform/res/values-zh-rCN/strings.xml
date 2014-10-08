@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">"测试平台"</string>
+    <string name="ready">"就绪"</string>
+    <string name="registering">"正在注册"</string>
+    <string name="connecting">"正在建立连接"</string>
+    <string name="disconnecting">"正在断开连接"</string>
+    <string name="connected">"连接"</string>
+    <string name="disconnected">"断开"</string>
+    <string name="wifi_mac_invalid">"请写入有效的WLAN地址"</string>
+    <string name="user_name_invalid">"请填写正确的用户ID"</string>
+    <string name="user_name_inactivated">"请先登录测试平台激活你的用户ID"</string>
+    <string name="device_related">"当前设备已被关联到其他科室"</string>
+    <string name="server_connected">"服务器已连接。"</string>
+    <string name="server_disconnected">"服务器已断开。"</string>
+    <string name="installing">"正在安装 %1$s"</string>
+    <string name="system_update">"系统升级"</string>
+    <string name="system_test">"系统测试"</string>
+    <string name="timeout_skip">"%1$d 秒后执行此任务。"</string>
+    <string name="version_download_title">"版本下载"</string>
+    <string name="version_download_text">"正在下载版本%1$s。"</string>
+    <string name="module_update_title">"模块更新"</string>
+    <string name="module_update_text">"正在更新模块%1$s。"</string>
+    <string name="file_upload_title">"文件上传"</string>
+    <string name="file_upload_text">"正在上传文件。"</string>
+    <string name="build_date">"构建日期"</string>
+    <string name="build_url">"更新地址"</string>
+    <string name="test_name">"测试名称"</string>
+    <string name="test_module">"测试模块"</string>
+    <string name="test_extras">"测试参数"</string>
+    <string name="test_output">"测试输出"</string>
+    <string name="task_status">"任务状态"</string>
+    <string name="drawer_open">"打开导航抽屉"</string>
+    <string name="drawer_close">"关闭导航抽屉"</string>
+    <string name="user_name">"用户名"</string>
+    <string name="connection">"连接"</string>
+    <string name="settings">"设置"</string>
+    <string name="never_update">"跳过升级"</string>
+    <string name="never_update_s">"忽略每日构建版本升级"</string>
+    <string name="never_test">"跳过测试"</string>
+    <string name="never_test_s">"忽略系统测试任务"</string>
+    <string name="manage_task">"任务列表"</string>
+
+    <plurals name="tasks">
+        <item quantity="other">共%d个任务</item>
+    </plurals>
+
+    <string name="manage_output">"日志报告"</string>
+    <string name="upload">"上传"</string>
+    <string name="share">"共享"</string>
+    <string name="delete">"删除"</string>
+    <string name="uploading">"正在上传"</string>
+    <string name="upload_ok">"上传完成"</string>
+    <string name="upload_fail">"上传失败"</string>
+    <string name="empty">"没有数据"</string>
+    <string name="long_press_select">"长按开始选择"</string>
+    <string name="select_items">"选择项目"</string>
+
+    <plurals name="selects">
+        <item quantity="other">"%d个项目被选择"</item>
+    </plurals>
+
+    <string name="admin">"后台管理"</string>
+    <string name="about">"关于"</string>
+    <string name="device_info">"设备"</string>
+    <string name="address">"设备地址"</string>
+    <string name="model">"设备型号"</string>
+    <string name="display">"设备版本"</string>
+    <string name="build">"构建日期"</string>
+    <string name="version_info">"版本"</string>
+    <string name="version">"版本"</string>
+    <string name="version_update">"版本检测"</string>
+    <string name="version_check">"点击检测是否有版本更新"</string>
+    <string name="version_new">"发现新版本：%1$s\n\n%2$s"</string>
+    <string name="version_uptodate">"当前已是最新版本"</string>
+    <string name="update">"更新"</string>
+
+</resources>

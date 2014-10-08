@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">压力测试</string>
+    <string name="manual_finish">手动结束</string>
+    <string name="manual_cancel">手动取消</string>
+    <string name="test_summary">%1$d成功 %2$d失败</string>
+    <string name="test_times_label">测试次数：</string>
+    <string name="select_all">全选</string>
+    <string name="deselect_all">全不选</string>
+    <string name="start_selected_test">开始所选测试</string>
+    <string name="airplane_mode_test">飞行模式测试</string>
+    <string name="wireless_test">无线随机测试</string>
+    <string name="bluetooth_test">蓝牙测试</string>
+    <string name="wifi_test">Wi-Fi测试</string>
+    <string name="nfc_test">NFC测试</string>
+    <string name="ringtone_test">铃声测试</string>
+    <string name="file_system_test">文件系统测试</string>
+    <string name="sdcard_test">SD卡测试</string>
+    <string name="charger_test">充电测试</string>
+    <string name="sleep_wake_test">休眠唤醒测试</string>
+    <string name="breathinglight_test">呼吸灯测试</string>
+    <string name="apn_test">APN切换测试</string>
+    <string name="call_test">通话测试</string>
+    <string name="outgoing_number_label">去电号码：</string>
+    <string name="test_interval_label">测试间隔(ms)：</string>
+    <string name="sms_test">短信测试</string>
+    <string name="vibrator_test">振动测试</string>
+    <string name="camera_test">摄像头测试</string>
+    <string name="compass_sensor_test">电磁场传感器测试</string>
+    <string name="accelerometer_sensor_test">加速度传感器测试</string>
+    <string name="proximity_sensor_test">距离传感器测试</string>
+    <string name="light_sensor_test">光线传感器测试</string>
+    <string name="gyroscope_sensor_test">陀螺仪传感器测试</string>
+    <string name="pressure_sensor_test">压力传感器测试</string>
+    <string name="humidity_sensor_test">湿度传感器测试</string>
+    <string name="temperature_sensor_test">温度传感器测试</string>
+    <string name="reboot_test">重启测试</string>
+    <string name="recovery_test">恢复出厂设置测试</string>
+    <string name="network_test">开机搜网测试</string>
+    <string name="network_test2">网络搜索测试</string>
+    <string name="network_test3">最长搜网时间测试</string>
+    <string name="data_test">数据业务测试</string>
+    <string name="baseband_version_test">基带版本测试</string>
+    <string name="report_titles">序号\t总次数\t测试次数\t成功次数\t失败次数\t测试项\n</string>
+
+</resources>

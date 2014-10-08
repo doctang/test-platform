@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="admin_url">"http://testplat.server.ztemt.com.cn"</string>
+    <string name="register_url">"http://testplat.server.ztemt.com.cn/device/register.json"</string>
+    <string name="update_url">"http://testplat.server.ztemt.com.cn/update/%1$s"</string>
+    <string name="upload_url">"http://testplat.server.ztemt.com.cn/log/uploadTaskLog.zte"</string>
+
+</resources>

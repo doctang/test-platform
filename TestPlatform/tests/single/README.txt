@@ -1,0 +1,1 @@
+sh start.sh 'com.android.settings 10000 5' '/data/local/tmp/single.txt'

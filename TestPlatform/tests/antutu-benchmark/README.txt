@@ -1,0 +1,1 @@
+sh start.sh '' '/data/local/tmp/screenshot.png'

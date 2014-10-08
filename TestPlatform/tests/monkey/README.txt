@@ -1,0 +1,1 @@
+sh start.sh '-s 25 --ignore-timeouts --ignore-crashes -v 1000000 --pct-nav 0 --pct-trackball 0' '/data/local/tmp/monkey.txt'

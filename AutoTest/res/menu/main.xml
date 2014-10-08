@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/manual_finish"
+        android:title="@string/manual_finish"
+        android:icon="@android:drawable/ic_menu_directions"
+        android:showAsAction="always" />
+    <item
+        android:id="@+id/manual_cancel"
+        android:title="@string/manual_cancel"
+        android:icon="@android:drawable/ic_menu_close_clear_cancel"
+        android:showAsAction="always" />
+
+</menu>
