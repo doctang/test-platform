@@ -1,6 +1,9 @@
 package com.ztemt.test.perf;
 
-import android.os.SystemProperties;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 import android.text.TextUtils;
 
 import com.android.uiautomator.core.UiObject;
@@ -58,8 +61,17 @@ public class DialerTest extends PerfTest {
     }
 
     private String getOperatorNumber() {
-        String operator = SystemProperties.get("gsm.operator.numeric");
+        String operator = null;
         String phoneNumber = null;
+
+        try {
+            Process p = Runtime.getRuntime().exec("getprop gsm.operator.numeric");
+            InputStreamReader in = new InputStreamReader(p.getInputStream());
+            BufferedReader br = new BufferedReader(in);
+            operator = br.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         if ("46000".equals(operator) || "46002".equals(operator)
                 || "46007".equals(operator)) {

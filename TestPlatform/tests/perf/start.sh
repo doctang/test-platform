@@ -25,6 +25,9 @@ else
     cp -f $1/MTBF.jar /data/local/tmp
     cp -f $1/person.jpg /sdcard
 
+    #安装工具应用
+    pm install -r $1/TestCommon.apk
+
     #启动开机系统内存使用情况测试
     uiautomator runtest PERF.jar -c com.ztemt.test.perf.MeminfoDumper >> $2".txt" 2>$2".meminfo.txt"
 
