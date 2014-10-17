@@ -12,7 +12,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.os.Environment;
 import android.text.TextUtils;
 
 /**
@@ -28,6 +27,14 @@ public class AppAnalyser extends PerfTest {
                 "App", "size(byte)", "1st(ms)", "2nd(ms)", "3rd(ms)", "4th(ms)",
                 "5th(ms)", "6th(ms)", "min(ms)", "max(ms)", "avg.(ms)"));
 
+        // 获取启动器列表
+        Runtime.getRuntime().exec("am startservice -n com.ztemt.test.common/.PackageService --es command getLauncherList");
+        sleep(1500);
+
+        // 读取启动器列表
+        File file = new File("/data/data/com.ztemt.test.common/files/launcher");
+        JSONObject jobj = new JSONObject(readLine(file));
+
         // 遍历系统应用
         Process p = Runtime.getRuntime().exec("pm list package -s");
         InputStreamReader in = new InputStreamReader(p.getInputStream());
@@ -36,26 +43,18 @@ public class AppAnalyser extends PerfTest {
         while ((line = br.readLine()) != null) {
             String packageName = line.substring(8);
 
-            // 获取启动器列表
-            Runtime.getRuntime().exec("am startservice -n com.ztemt.test.common/.PackageService --es package "
-                    + packageName);
-            sleep(1500);
-
-            // 读取启动器列表
-            File file = new File(Environment.getExternalStorageDirectory(),
-                    "launcher.info");
-            JSONArray array = new JSONArray(readLine(file));
-
-            // 打印表内容
-            for (int i = 0; i < array.length(); i++) {
-                JSONObject obj = array.getJSONObject(i);
-                long[] time = getLaunchTime(packageName, obj.optString("activity"));
-                int padding = 12 - Utils.getHanziCount(obj.optString("title"));
-                System.err.println(String.format("%-" + padding
-                        + "s%-12s%-12s%-12s%-12s%-12s%-12s%-12s%-12s%-12s%-12s",
-                        obj.optString("title"), getPackageSize(packageName),
-                        time[0], time[1], time[2], time[3], time[4], time[5],
-                        time[6], time[7], time[8]));
+            if (jobj.has(packageName)) {
+                JSONArray array = jobj.getJSONArray(packageName);
+                for (int i = 0; i < array.length(); i++) {
+                    JSONObject obj = array.getJSONObject(i);
+                    long[] time = getLaunchTime(packageName, obj.optString("activity"));
+                    int padding = 12 - Utils.getHanziCount(obj.optString("title"));
+                    System.err.println(String.format("%-" + padding
+                            + "s%-12s%-12s%-12s%-12s%-12s%-12s%-12s%-12s%-12s%-12s",
+                            obj.optString("title"), getPackageSize(packageName),
+                            time[0], time[1], time[2], time[3], time[4], time[5],
+                            time[6], time[7], time[8]));
+                }
             }
         }
     }

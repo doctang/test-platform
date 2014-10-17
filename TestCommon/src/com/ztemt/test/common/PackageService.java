@@ -13,12 +13,11 @@ import org.json.JSONObject;
 import android.app.Service;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
-import android.os.Environment;
 import android.os.IBinder;
 
 public class PackageService extends Service {
 
-    public static final String EXTRA_PACKAGE = "package";
+    public static final String EXTRA_COMMAND = "command";
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -28,33 +27,41 @@ public class PackageService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (intent != null) {
-            getLauncherList(intent.getStringExtra(EXTRA_PACKAGE));
+            String command = intent.getStringExtra(EXTRA_COMMAND);
+            if ("getLauncherList".equals(command)) {
+                getLauncherList();
+            }
         }
         return START_NOT_STICKY;
     }
 
-    private void getLauncherList(String packageName) {
+    private void getLauncherList() {
         Intent query = new Intent(Intent.ACTION_MAIN).addCategory(
-                Intent.CATEGORY_LAUNCHER).setPackage(packageName);
-        List<ResolveInfo> activities = getPackageManager().queryIntentActivities(
-                query, 0);
-        JSONArray array = new JSONArray();
+                Intent.CATEGORY_LAUNCHER);
+        List<ResolveInfo> activities = getPackageManager()
+                .queryIntentActivities(query, 0);
+        JSONObject jobj = new JSONObject();
 
         for (ResolveInfo info : activities) {
+            String packageName = info.activityInfo.packageName;
             JSONObject obj = new JSONObject();
             try {
                 obj.put("title", info.loadLabel(getPackageManager()).toString());
                 obj.put("activity", info.activityInfo.name);
+                if (jobj.has(packageName)) {
+                    jobj.getJSONArray(packageName).put(obj);
+                } else {
+                    jobj.put(packageName, new JSONArray().put(obj));
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            array.put(obj);
         }
 
-        // Save json array to external storage
-        File file = new File(Environment.getExternalStorageDirectory(),
-                "launcher.info");
-        write(array.toString(), file);
+        // Save json object to external storage
+        File file = getFileStreamPath("launcher");
+        file.setReadable(true, false);
+        write(jobj.toString(), file);
     }
 
     private static void write(String line, File t) {
