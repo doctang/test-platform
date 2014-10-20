@@ -60,8 +60,10 @@ public class PackageService extends Service {
 
         // Save json object to external storage
         File file = getFileStreamPath("launcher");
-        file.setReadable(true, false);
         write(jobj.toString(), file);
+
+        getFilesDir().setReadable(true, false);
+        file.setReadable(true, false);
     }
 
     private static void write(String line, File t) {
