@@ -2,6 +2,7 @@
 
 import codecs
 import getopt
+import glob
 import json
 import os
 import re
@@ -151,18 +152,50 @@ def reboot():
     report.write('{0:0.3f}\n'.format(uptime + 2))
     report.close()
 
+def install():
+    report = open(os.path.join(perfout, 'install.csv'), 'w')
+    report.write(codecs.BOM_UTF8)
+    report.write('应用文件名,安装,启动,卸载,异常\n')
+
+    pattern = os.path.join(os.path.join(os.path.join(workdir, 'perfres'), 'TOP10APK'), '*.apk')
+    for filename in glob.glob(pattern):
+        lines = os.popen('adb install -r \"{0}\"'.format(filename)).readlines()
+        install = 'Success' in [line.strip() for line in lines]
+        launch = True
+        crash = anr = None
+        uninstall = False
+        if install:
+            time.sleep(3)
+            package = os.popen('adb shell cat /data/data/com.ztemt.test.common/files/package').readline()
+            lines = os.popen('adb shell monkey -p {0} -s 10 --throttle 10000 --ignore-timeouts --ignore-crashes -v 10'.format(package)).readlines()
+            for line in lines:
+                if line.startswith('// CRASH: {0}'.format(package)):
+                    launch = False
+                elif not launch and line.startswith('// Long Msg:'):
+                    crash = 'CRASH: {0}'.format(line[13:].strip())
+                    break
+                elif line.startswith('// NOT RESPONDING: {0}'.format(package)):
+                    launch = False
+                elif not launch and line.startswith('Reason:'):
+                    anr = 'ANR: {0}'.format(line[8:].strip())
+                    break
+            time.sleep(3)
+            lines = os.popen('adb uninstall {0}'.format(package))
+            uninstall = 'Success' in [line.strip() for line in lines]
+        else:
+            launch = False
+
+        report.write('{0},{1},{2},{3},{4}\n'.format(os.path.basename(filename), 'Pass' if install else 'Fail',
+                'Pass' if launch else 'Fail', 'Pass' if uninstall else 'Fail', crash if crash else anr if anr else ''))
+        report.flush()
+    report.close()
+
 def main():
     shutil.rmtree(perfout, ignore_errors=True)
     if not os.path.exists(perfout):
         os.mkdir(perfout)
 
-    apkpath = os.path.join(workdir, 'TestCommon.apk')
-    os.system('adb install -r \"{0}\"'.format(apkpath))
-    os.system('adb shell am startservice -W -n com.ztemt.test.common/.PackageService --es command getLauncherList')
-    time.sleep(3)
-    line = os.popen('adb shell cat /data/data/com.ztemt.test.common/files/launcher').readline()
-    jobj = eval(line)
-    os.system('adb uninstall com.ztemt.test.common')
+    os.popen('adb install -r \"{0}\"'.format(os.path.join(workdir, 'TestCommon.apk')))
 
     try:
         opts, args = getopt.getopt(sys.argv[1:], 'p:')
@@ -175,7 +208,11 @@ def main():
             packages.append(value)
 
     if len(packages) == 0:
-        packages = [line[8:].strip() for line in os.popen('adb shell pm list package -s').readlines()]  
+        packages = [line[8:].strip() for line in os.popen('adb shell pm list package -s').readlines()]
+
+    os.popen('adb shell am startservice -W -n com.ztemt.test.common/.PackageService --es command getLauncherList')
+    time.sleep(3)
+    jobj = eval(os.popen('adb shell cat /data/data/com.ztemt.test.common/files/launcher').readline())
 
     for package in packages:
         if package in jobj:
@@ -183,10 +220,14 @@ def main():
                 getAppsInfo(package, item['title'], item['activity'])
             monkey(package)
 
+    install()
+
     reboot()
 
+    os.popen('adb uninstall com.ztemt.test.common')
+
 workdir = os.path.dirname(os.path.realpath(sys.argv[0]))
-perfout = os.path.join(workdir, 'perf_out')
+perfout = os.path.join(workdir, 'perfout')
 
 if __name__ == '__main__':
     try:

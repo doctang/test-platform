@@ -11,17 +11,54 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Service;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.ResolveInfo;
 import android.os.IBinder;
+import android.text.TextUtils;
 
 public class PackageService extends Service {
 
-    public static final String EXTRA_COMMAND = "command";
+    private static final String EXTRA_COMMAND = "command";
+
+    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            String packageName = "";
+
+            if (action.equals(Intent.ACTION_PACKAGE_ADDED)) {
+                packageName = intent.getData().getSchemeSpecificPart();
+            }
+
+            if (!TextUtils.isEmpty(packageName)) {
+                File file = getFileStreamPath("package");
+                write(packageName, file);
+
+                getFilesDir().setReadable(true, false);
+                file.setReadable(true, false);
+            }
+        }
+    };
 
     @Override
     public IBinder onBind(Intent intent) {
         return null;
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        IntentFilter filter = new IntentFilter(Intent.ACTION_PACKAGE_ADDED);
+        filter.addAction(Intent.ACTION_PACKAGE_REMOVED);
+        filter.addAction(Intent.ACTION_PACKAGE_REPLACED);
+        filter.addDataScheme("package");
+
+        registerReceiver(mReceiver, filter);
     }
 
     @Override
@@ -33,6 +70,13 @@ public class PackageService extends Service {
             }
         }
         return START_NOT_STICKY;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        unregisterReceiver(mReceiver);
     }
 
     private void getLauncherList() {
