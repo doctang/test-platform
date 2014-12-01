@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.ztemt.test.common"
+    package="com.ztemt.test.kit"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -7,12 +7,17 @@
         android:minSdkVersion="14"
         android:targetSdkVersion="18" />
 
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        <service android:name=".PackageService" android:exported="true" >
+        <service android:name=".TestKitService" android:exported="true" >
+            <intent-filter >
+                <action android:name="com.ztemt.test.action.TEST_KIT" />
+            </intent-filter>
         </service>
     </application>
 

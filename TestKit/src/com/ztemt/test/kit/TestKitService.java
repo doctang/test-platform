@@ -1,4 +1,4 @@
-package com.ztemt.test.common;
+package com.ztemt.test.kit;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -10,6 +10,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.KeyguardManager;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -19,7 +20,7 @@ import android.content.pm.ResolveInfo;
 import android.os.IBinder;
 import android.text.TextUtils;
 
-public class PackageService extends Service {
+public class TestKitService extends Service {
 
     private static final String EXTRA_COMMAND = "command";
 
@@ -44,6 +45,9 @@ public class PackageService extends Service {
         }
     };
 
+    @SuppressWarnings("deprecation")
+    private KeyguardManager.KeyguardLock mKeyguardLock;
+
     @Override
     public IBinder onBind(Intent intent) {
         return null;
@@ -67,6 +71,10 @@ public class PackageService extends Service {
             String command = intent.getStringExtra(EXTRA_COMMAND);
             if ("getLauncherList".equals(command)) {
                 getLauncherList();
+            } else if ("disableKeyguard".equals(command)) {
+                enableKeyguard(false);
+            } else if ("enableKeyguard".equals(command)) {
+                enableKeyguard(true);
             }
         }
         return START_NOT_STICKY;
@@ -126,6 +134,19 @@ public class PackageService extends Service {
                     e.printStackTrace();
                 }
             }
+        }
+    }
+
+    @SuppressWarnings("deprecation")
+    private void enableKeyguard(boolean enabled) {
+        if (mKeyguardLock == null) {
+            KeyguardManager km = (KeyguardManager) getSystemService(KEYGUARD_SERVICE);
+            mKeyguardLock = km.newKeyguardLock("keyguard");
+        }
+        if (enabled) {
+            mKeyguardLock.reenableKeyguard();
+        } else {
+            mKeyguardLock.disableKeyguard();
         }
     }
 }
