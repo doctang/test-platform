@@ -22,6 +22,9 @@ public class DataTest extends BaseTest {
     private ConnectivityManager mCM;
     private WifiManager mWM;
 
+    private PhoneStateListener mPhoneStateListener1 = null;
+    private PhoneStateListener mPhoneStateListener2 = null;
+
     private PhoneStateListener mPhoneStateListener = new PhoneStateListener() {
 
         @Override
@@ -34,36 +37,40 @@ public class DataTest extends BaseTest {
         }
     };
 
-    private PhoneStateListener mPhoneStateListener1 = new PhoneStateListener(0) {
-
-        @Override
-        public void onDataConnectionStateChanged(int state, int networkType) {
-            if (state == TelephonyManager.DATA_CONNECTED) {
-                mMSTM.listen(mPhoneStateListener1, LISTEN_NONE);
-                setSuccess();
-                resume();
-            }
-        }
-    };
-
-    private PhoneStateListener mPhoneStateListener2 = new PhoneStateListener(1) {
-
-        @Override
-        public void onDataConnectionStateChanged(int state, int networkType) {
-            if (state == TelephonyManager.DATA_CONNECTED) {
-                mMSTM.listen(mPhoneStateListener2, LISTEN_NONE);
-                setSuccess();
-                resume();
-            }
-        }
-    };
-
     public DataTest(Context context) {
         super(context);
+
         mMSTM = (MSimTelephonyManager) mContext.getSystemService("phone_msim");
         mTM = (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
         mCM = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
         mWM = (WifiManager) mContext.getSystemService(Context.WIFI_SERVICE);
+
+        try {
+            mPhoneStateListener1 = new PhoneStateListener(0) {
+    
+                @Override
+                public void onDataConnectionStateChanged(int state, int networkType) {
+                    if (state == TelephonyManager.DATA_CONNECTED) {
+                        mMSTM.listen(mPhoneStateListener1, LISTEN_NONE);
+                        setSuccess();
+                        resume();
+                    }
+                }
+            };
+            mPhoneStateListener2 = new PhoneStateListener(1) {
+    
+                @Override
+                public void onDataConnectionStateChanged(int state, int networkType) {
+                    if (state == TelephonyManager.DATA_CONNECTED) {
+                        mMSTM.listen(mPhoneStateListener2, LISTEN_NONE);
+                        setSuccess();
+                        resume();
+                    }
+                }
+            };
+        } catch (NoSuchMethodError e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -75,11 +82,16 @@ public class DataTest extends BaseTest {
         if (mMSTM.isMultiSimEnabled()) {
             startActiveData();
             setTimeout(120000);
-            mMSTM.listen(mPhoneStateListener1, PhoneStateListener.LISTEN_DATA_CONNECTION_STATE);
-            mMSTM.listen(mPhoneStateListener2, PhoneStateListener.LISTEN_DATA_CONNECTION_STATE);
-            pause();
-            mMSTM.listen(mPhoneStateListener1, PhoneStateListener.LISTEN_NONE);
-            mMSTM.listen(mPhoneStateListener2, PhoneStateListener.LISTEN_NONE);
+            if (mPhoneStateListener1 != null) {
+                mMSTM.listen(mPhoneStateListener1, PhoneStateListener.LISTEN_DATA_CONNECTION_STATE);
+                mMSTM.listen(mPhoneStateListener2, PhoneStateListener.LISTEN_DATA_CONNECTION_STATE);
+                pause();
+                mMSTM.listen(mPhoneStateListener1, PhoneStateListener.LISTEN_NONE);
+                mMSTM.listen(mPhoneStateListener2, PhoneStateListener.LISTEN_NONE);
+            } else {
+                setSuccess();
+                resume();
+            }
         } else {
             if (mCM.getMobileDataEnabled()) {
                 mCM.setMobileDataEnabled(false);

@@ -21,6 +21,9 @@ public class NetworkTest3 extends BaseTest {
     private MSimTelephonyManager mMSTM;
     private TelephonyManager mTM;
 
+    private PhoneStateListener mPhoneStateListener1 = null;
+    private PhoneStateListener mPhoneStateListener2 = null;
+
     private boolean mStateInService1;
     private boolean mStateInService2;
 
@@ -41,38 +44,42 @@ public class NetworkTest3 extends BaseTest {
         }
     };
 
-    private PhoneStateListener mPhoneStateListener1 = new PhoneStateListener(0) {
-
-        @Override
-        public void onServiceStateChanged(ServiceState serviceState) {
-            int state = serviceState.getState();
-
-            if (state == ServiceState.STATE_IN_SERVICE) {
-                mMSTM.listen(this, LISTEN_NONE);
-                mStateInService1 = true;
-                multiSuccessResume();
-            }
-        }
-    };
-
-    private PhoneStateListener mPhoneStateListener2 = new PhoneStateListener(1) {
-
-        @Override
-        public void onServiceStateChanged(ServiceState serviceState) {
-            int state = serviceState.getState();
-
-            if (state == ServiceState.STATE_IN_SERVICE) {
-                mMSTM.listen(this, LISTEN_NONE);
-                mStateInService2 = true;
-                multiSuccessResume();
-            }
-        }
-    };
-
     public NetworkTest3(Context context) {
         super(context);
+
         mMSTM = (MSimTelephonyManager) mContext.getSystemService("phone_msim");
         mTM = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+
+        try {
+            mPhoneStateListener1 = new PhoneStateListener(0) {
+    
+                @Override
+                public void onServiceStateChanged(ServiceState serviceState) {
+                    int state = serviceState.getState();
+    
+                    if (state == ServiceState.STATE_IN_SERVICE) {
+                        mMSTM.listen(this, LISTEN_NONE);
+                        mStateInService1 = true;
+                        multiSuccessResume();
+                    }
+                }
+            };
+            mPhoneStateListener2 = new PhoneStateListener(1) {
+    
+                @Override
+                public void onServiceStateChanged(ServiceState serviceState) {
+                    int state = serviceState.getState();
+    
+                    if (state == ServiceState.STATE_IN_SERVICE) {
+                        mMSTM.listen(this, LISTEN_NONE);
+                        mStateInService2 = true;
+                        multiSuccessResume();
+                    }
+                }
+            };
+        } catch (NoSuchMethodError e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -87,11 +94,17 @@ public class NetworkTest3 extends BaseTest {
         if (mMSTM.isMultiSimEnabled()) {
             mStateInService1 = false;
             mStateInService2 = false;
-            mMSTM.listen(mPhoneStateListener1, PhoneStateListener.LISTEN_SERVICE_STATE);
-            mMSTM.listen(mPhoneStateListener2, PhoneStateListener.LISTEN_SERVICE_STATE);
-            pause();
-            mMSTM.listen(mPhoneStateListener1, PhoneStateListener.LISTEN_NONE);
-            mMSTM.listen(mPhoneStateListener2, PhoneStateListener.LISTEN_NONE);
+            if (mPhoneStateListener1 != null) {
+                mMSTM.listen(mPhoneStateListener1, PhoneStateListener.LISTEN_SERVICE_STATE);
+                mMSTM.listen(mPhoneStateListener2, PhoneStateListener.LISTEN_SERVICE_STATE);
+                pause();
+                mMSTM.listen(mPhoneStateListener1, PhoneStateListener.LISTEN_NONE);
+                mMSTM.listen(mPhoneStateListener2, PhoneStateListener.LISTEN_NONE);
+            } else {
+                mStateInService1 = true;
+                mStateInService2 = true;
+                multiSuccessResume();
+            }
         } else {
             mTM.listen(mPhoneStateListener, PhoneStateListener.LISTEN_SERVICE_STATE);
             pause();
